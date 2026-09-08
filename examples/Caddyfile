@@ -1,0 +1,18 @@
+{
+    servers {
+        protocols h1 h2
+    }
+    log default {
+        output discard
+    }
+}
+
+dns.example.com {
+    tls /etc/caddy/certs/fullchain.pem /etc/caddy/certs/privkey.pem
+    # Access logging is disabled: do not add a log directive.
+    reverse_proxy /dns-query 127.0.0.1:8080 {
+        header_up -X-Forwarded-For
+        header_up -X-Forwarded-Host
+        header_up -X-Forwarded-Proto
+    }
+}

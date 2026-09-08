@@ -1,0 +1,4 @@
+.env
+relay
+relay.exe
+*.test

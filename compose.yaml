@@ -1,0 +1,14 @@
+services:
+  doh-relay:
+    image: ghcr.io/krabdo/doh-relay:latest
+    restart: unless-stopped
+    environment:
+      UPSTREAM_URL: ${UPSTREAM_URL:?Set UPSTREAM_URL in .env}
+      LISTEN_ADDR: ${LISTEN_ADDR:-:8080}
+      DOH_PATH: ${DOH_PATH:-/dns-query}
+      REQUEST_TIMEOUT: ${REQUEST_TIMEOUT:-10s}
+    ports:
+      - "127.0.0.1:8080:8080"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
